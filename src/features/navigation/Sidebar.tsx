@@ -6,8 +6,10 @@ import {
   Edit2,
   Folder as FolderIcon,
   FolderInput,
+  Moon,
   PanelLeftClose,
   PanelLeftOpen,
+  Sun,
   Trash2,
   X,
 } from "lucide-react";
@@ -16,6 +18,7 @@ import { ToolBadge } from "@/components/ui/ToolBadge";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useSidebarState } from "@/hooks/useSidebarState";
 import { useTabs } from "@/hooks/useTabs";
+import { useTheme } from "@/hooks/useTheme";
 import { useWorkspaceStore } from "@/store/workspace.store";
 import { filterCatalog } from "./filterCatalog";
 
@@ -41,6 +44,7 @@ export function Sidebar() {
   const renameFolder = useWorkspaceStore((s) => s.renameFolder);
   const { collapsed, expandedFolderIds, toggleSidebar, toggleFolder } = useSidebarState();
   const { tabs, activeTabId, openTool } = useTabs();
+  const { theme, toggleTheme } = useTheme();
 
   const [dragToolId, setDragToolId] = useState<string | null>(null);
   const [overFolderId, setOverFolderId] = useState<string | null>(null);
@@ -130,7 +134,7 @@ export function Sidebar() {
         {collapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}
       </button>
 
-      <nav className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain px-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+      <nav className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain px-2 pb-3">
         {railMode ? (
           <ul className="flex flex-col items-center gap-2">
             {tools.map((t) => (
@@ -329,6 +333,25 @@ export function Sidebar() {
           <p className="px-3 py-4 text-sm text-subtle">No folders or tools match “{query}”.</p>
         )}
       </nav>
+
+      {/* Theme toggle lives here so the header stays free of secondary actions. */}
+      <div className="shrink-0 border-t border-line p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+        <button
+          onClick={toggleTheme}
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          className={`flex w-full items-center gap-2.5 rounded-md px-2 py-2 text-sm text-muted hover:bg-hover hover:text-strong ${
+            railMode ? "justify-center" : ""
+          }`}
+        >
+          {theme === "dark" ? (
+            <Sun size={16} className="shrink-0" />
+          ) : (
+            <Moon size={16} className="shrink-0" />
+          )}
+          {!railMode && <span className="truncate">{theme === "dark" ? "Light mode" : "Dark mode"}</span>}
+        </button>
+      </div>
     </aside>
   );
 }
