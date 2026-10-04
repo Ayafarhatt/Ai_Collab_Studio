@@ -1,23 +1,18 @@
-import { Menu, Moon, Plus, Search, Sun } from "lucide-react";
-import type { Theme } from "@/hooks/useTheme";
-import type { UserProfile } from "@/types";
+import { Menu, Plus, Search } from "lucide-react";
 
 interface HeaderProps {
-  user: UserProfile;
   query: string;
   onQueryChange: (q: string) => void;
   onAddClick: () => void;
   onMenuClick: () => void;
-  theme: Theme;
-  onToggleTheme: () => void;
 }
 
 /**
- * Pure presentational top bar: menu, logo, search, actions, profile.
+ * Pure presentational top bar: menu, logo, search and the add action.
  * Phones get an icon-only logo, a menu button and a second full-width search row
  * so nothing is squeezed; the label of the add button collapses to its icon.
  */
-export function Header({ user, query, onQueryChange, onAddClick, onMenuClick, theme, onToggleTheme }: HeaderProps) {
+export function Header({ query, onQueryChange, onAddClick, onMenuClick }: HeaderProps) {
   return (
     <header className="z-30 shrink-0 border-b border-line bg-canvas">
       <div className="flex h-14 items-center gap-2 px-3 sm:gap-3 md:h-16 md:gap-4 md:px-5">
@@ -45,19 +40,6 @@ export function Header({ user, query, onQueryChange, onAddClick, onMenuClick, th
           <Plus size={16} />
           <span className="hidden md:inline">Add New AI Tool / Folder</span>
         </button>
-        <button
-          onClick={onToggleTheme}
-          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-          className="shrink-0 rounded-lg p-2 text-muted hover:bg-hover hover:text-strong"
-        >
-          {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-        </button>
-        <div
-          title={user.name}
-          className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-slate-700 text-xs font-semibold text-white"
-        >
-          {user.name.charAt(0).toUpperCase()}
-        </div>
       </div>
 
       <div className="px-3 pb-2 md:hidden">
