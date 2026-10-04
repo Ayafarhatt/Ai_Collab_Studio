@@ -46,7 +46,6 @@ src/
 ├── store/           # Zustand state management
 └── types/           # TypeScript type definitions
 ```
-Understood — names only, no versions, no explanation. Keeping the rest of the README untouched.
 
 ## Tech Stack
 
@@ -57,4 +56,3 @@ Understood — names only, no versions, no explanation. Keeping the rest of the 
 - Zustand
 - lucide-react
 ```
-
