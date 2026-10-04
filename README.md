@@ -1,48 +1,53 @@
-# AI Collab Studio - README
+Plan is settled. Here's what I'll do — README-only changes, no code.
 
-## Main Idea
+## 1. New "Tech Stack" section (with versions)
 
-AI Collab Studio is a local-first dashboard for organizing and accessing your AI tools in one place. Instead of juggling multiple tabs for Claude, ChatGPT, Gemini, and other AI tools, this app provides a unified workspace with folder organization, browser-style tabs, and a sleek dark/light theme interface.
+Placed right after **Main Idea**, before **How to Run**. Versions taken verbatim from `package.json`:
 
-The app is designed to work locally with no external backend - all your data stays in localStorage.
+| Layer | Choice | Version |
+|---|---|---|
+| Framework | Next.js (App Router, Turbopack builds) | 16.3.8 |
+| UI runtime | React / React DOM | 19.2.8 |
+| Language | TypeScript (`.ts` / `.tsx`) | ^5 |
+| Styling | Tailwind CSS via `@tailwindcss/postcss` | ^4 |
+| State | Zustand + `persist` middleware | ^5.0.15 |
+| Icons | lucide-react | ^1.52.0 |
+| Linting | ESLint + eslint-config-next | ^9 / 16.3.8 |
+| Types | `@types/node`, `@types/react`, `@types/react-dom` | ^20 / ^19 / ^19 |
 
-## How to Run
+Plus two short notes that are genuinely non-obvious from the code:
+- Tailwind v4 is **CSS-first** — there is no `tailwind.config.js`; the theme lives in `src/app/globals.css` via `@theme inline` + CSS custom properties (`--canvas`, `--panel`, `--surface`, `--accent`, …).
+- Theming is the `dark` class on `<html>`, set by a pre-paint inline script so there's no flash.
 
-```bash
-# Install dependencies
-npm install
+## 2. "Features" — adjust 3 bullets, add 1
 
-# Run development server
-npm run dev
+- **Tool Management** → add the touch path: move tools by drag-and-drop *or* the per-row move menu (HTML5 drag doesn't work on touch).
+- **Collapsible Sidebar** → describe both states: 56px icon rail on desktop, off-canvas drawer below `md` (768px).
+- **NEW Responsive Layout** → drawer + full-bleed workspace on phones, two-pane from `md` up, search drops to its own row, dialogs become bottom sheets, safe-area insets respected, hover-only row actions forced visible on touch.
+- **Light/Dark Mode** → unchanged (accurate as written).
+
+## 3. "Project Structure" — file-level tree
+
+Replace the folder-only listing with a real tree that reflects what's on disk today:
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Features
-
-- **Folder Organization**: Create, rename, and delete folders to organize your AI tools
-- **Tool Management**: Add, rename, delete, and move tools between folders with drag-and-drop
-- **Smart Search**: Global search to quickly find folders and tools
-- **Browser-style Tabs**: Open multiple tools simultaneously with tabs that preserve state when switching
-- **Tool Control Cards**: Since many AI sites block iframe embedding (via `X-Frame-Options`/CSP), each tool opens as a beautiful control card with "Open in New Tab" and local quick notes
-- **Light/Dark Mode**: Toggle theme with persistence across sessions
-- **Collapsible Sidebar**: Expand/collapse sidebar for more workspace room
-- **Local-First**: All data stored in localStorage, no external backend required
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── layout/      # Header, AppShell components
-│   └── ui/          # Reusable UI components (ToolBadge, etc.)
-├── features/
-│   ├── add-item/    # Add new tools/folders modal
-│   ├── navigation/  # Sidebar with folder tree
-│   ├── tool-viewer/ # Tool control cards and viewer
-│   └── workspaces/  # Tab bar and workspace panel
-├── hooks/           # Custom React hooks (useTabs, useTheme, etc.)
-├── services/        # Data layer (seed data, repository)
-├── store/           # Zustand state management
-└── types/           # TypeScript type definitions
+ai-collab-studio/
+├── extension/            # MV3 declarativeNetRequest extension (manifest.json, rules.json)
+├── src/
+│   ├── app/              # layout.tsx, page.tsx, globals.css  (Tailwind theme lives here)
+│   ├── components/
+│   │   ├── layout/       # AppShell.tsx, Header.tsx
+│   │   └── ui/           # Modal.tsx, ToolBadge.tsx
+│   ├── features/
+│   │   ├── add-item/     # AddItemModal.tsx
+│   │   ├── navigation/   # Sidebar.tsx, filterCatalog.ts
+│   │   ├── tool-viewer/  # ToolViewer, ToolControlCard, Launcher, ToolFrame
+│   │   └── workspaces/   # WorkspacePanel.tsx, TabBar.tsx
+│   ├── hooks/            # useTabs, useTheme, useSidebarState, useMediaQuery,
+│   │                     # useWorkspaceBootstrap
+│   ├── services/         # seed.ts, workspace.repository.ts
+│   ├── store/            # workspace.store.ts (Zustand + persist)
+│   └── types/            # index.ts
+├── next.config.ts · postcss.config.mjs · eslint.config.mjs · tsconfig.json
+└── package.json
 ```
