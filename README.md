@@ -1,41 +1,48 @@
-# AI Collab Studio
+# AI Collab Studio - README
+
+## Main Idea
+
+AI Collab Studio is a local-first dashboard for organizing and accessing your AI tools in one place. Instead of juggling multiple tabs for Claude, ChatGPT, Gemini, and other AI tools, this app provides a unified workspace with folder organization, browser-style tabs, and a sleek dark/light theme interface.
+
+The app is designed to work locally with no external backend - all your data stays in localStorage.
+
+## How to Run
 
 ```bash
+# Install dependencies
 npm install
+
+# Run development server
 npm run dev
 ```
 
-Open http://localhost:3000
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Features
 
-- Folders and tools in a collapsible sidebar (search, drag a tool onto another folder to move it, hover a tool and click the trash icon to remove it)
-- Browser-style tabs that keep their state when you switch
-- Light / dark mode (toggle in the header, remembered between visits)
+- **Folder Organization**: Create, rename, and delete folders to organize your AI tools
+- **Tool Management**: Add, rename, delete, and move tools between folders with drag-and-drop
+- **Smart Search**: Global search to quickly find folders and tools
+- **Browser-style Tabs**: Open multiple tools simultaneously with tabs that preserve state when switching
+- **Tool Control Cards**: Since many AI sites block iframe embedding (via `X-Frame-Options`/CSP), each tool opens as a beautiful control card with "Open in New Tab" and local quick notes
+- **Light/Dark Mode**: Toggle theme with persistence across sessions
+- **Collapsible Sidebar**: Expand/collapse sidebar for more workspace room
+- **Local-First**: All data stored in localStorage, no external backend required
 
-## Making sites embeddable (extension)
+## Project Structure
 
-Most AI sites forbid being shown inside an iframe (`ERR_BLOCKED_BY_RESPONSE`).
-The `extension/` folder is a tiny Chromium extension that removes those headers
-**only for frames loaded by localhost** (i.e. this dashboard).
-
-1. Open `opera://extensions` (Chrome: `chrome://extensions`, Edge: `edge://extensions`)
-2. Turn on **Developer mode**
-3. Click **Load unpacked** and select the `extension` folder
-4. Reload http://localhost:3000
-
-Known limits:
-- It removes the framed site's Content-Security-Policy while it is inside your dashboard.
-  Fine for personal use, but only keep it enabled while you use the app.
-- Logins can still fail inside iframes: browsers treat localhost and claude.ai as
-  different sites and may not send the site's login cookies (SameSite / third-party cookie rules).
-  If that happens, use "Open in new window", or move the app into Electron/Tauri
-  (native webviews are not subject to these rules).
-
-## Structure
-
-- `src/components`: pure UI (Header, Modal, AppShell)
-- `src/features`: navigation, workspaces, tool-viewer, add-item
-- `src/store`: Zustand state
-- `src/services`: seed data + repository (swap for Prisma later)
-- `src/hooks`, `src/types`
+```
+src/
+├── components/
+│   ├── layout/      # Header, AppShell components
+│   └── ui/          # Reusable UI components (ToolBadge, etc.)
+├── features/
+│   ├── add-item/    # Add new tools/folders modal
+│   ├── navigation/  # Sidebar with folder tree
+│   ├── tool-viewer/ # Tool control cards and viewer
+│   └── workspaces/  # Tab bar and workspace panel
+├── hooks/           # Custom React hooks (useTabs, useTheme, etc.)
+├── services/        # Data layer (seed data, repository)
+├── store/           # Zustand state management
+└── types/           # TypeScript type definitions
+```
