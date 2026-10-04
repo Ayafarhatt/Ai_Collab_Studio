@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "AI Collab Studio - Allow Embedding",
+  "version": "1.0.0",
+  "description": "Lets AI Collab Studio (localhost) show sites inside its tabs by removing their anti-framing headers. Only affects frames loaded by localhost.",
+  "permissions": ["declarativeNetRequest"],
+  "host_permissions": ["<all_urls>"],
+  "declarative_net_request": {
+    "rule_resources": [{ "id": "allow_embedding", "enabled": true, "path": "rules.json" }]
+  }
+}

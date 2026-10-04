@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+/* Dark mode is toggled by a `dark` class on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Light palette (default) */
+:root {
+  color-scheme: light;
+  --canvas: #f3f5fa;
+  --panel: #ffffff;
+  --line: #dbe1ee;
+  --strong: #0f172a;
+  --body: #1e293b;
+  --muted: #475569;
+  --subtle: #64748b;
+  --hover: rgb(15 23 42 / 0.06);
+  --hover-strong: rgb(15 23 42 / 0.12);
+  --accent: #2563eb;
+}
+
+/* Dark palette */
+.dark {
+  color-scheme: dark;
+  --canvas: #0a0f1c;
+  --panel: #0f1626;
+  --line: #1c2740;
+  --strong: #ffffff;
+  --body: #e2e8f0;
+  --muted: #94a3b8;
+  --subtle: #64748b;
+  --hover: rgb(255 255 255 / 0.06);
+  --hover-strong: rgb(255 255 255 / 0.12);
+  --accent: #3b82f6;
+}
+
+/* Expose as utilities: bg-canvas, bg-panel, border-line, text-strong, text-body, text-muted, text-subtle, bg-hover... */
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-panel: var(--panel);
+  --color-line: var(--line);
+  --color-strong: var(--strong);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-hover: var(--hover);
+  --color-hover-strong: var(--hover-strong);
+  --color-accent: var(--accent);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+html, body { height: 100%; background: var(--canvas); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
