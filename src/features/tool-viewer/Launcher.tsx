@@ -10,15 +10,15 @@ export function Launcher({ tabId }: { tabId: string }) {
   const { closeTab, openTool } = useTabs();
 
   return (
-    <div className="p-8">
-      <h2 className="mb-1 text-lg font-semibold text-strong">Open a tool</h2>
-      <p className="mb-6 text-sm text-subtle">Pick something to open in its own tab.</p>
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
+    <div className="h-full overflow-y-auto overscroll-contain p-4 sm:p-8">
+      <h2 className="mb-1 text-base font-semibold text-strong sm:text-lg">Open a tool</h2>
+      <p className="mb-4 text-sm text-subtle sm:mb-6">Pick something to open in its own tab.</p>
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
         {tools.map((t) => (
           <button
             key={t.id}
             onClick={() => { openTool(t.id); closeTab(tabId); }}
-            className="flex items-center gap-3 rounded-lg border border-line bg-canvas/50 px-4 py-3 text-left text-sm text-body hover:border-accent/60 hover:text-strong"
+            className="flex min-w-0 items-center gap-3 rounded-lg border border-line bg-canvas/50 px-3 py-3 text-left text-sm text-body hover:border-accent/60 hover:text-strong sm:px-4"
           >
             <ToolBadge name={t.name} accent={t.accent} size={28} />
             <span className="truncate">{t.name}</span>

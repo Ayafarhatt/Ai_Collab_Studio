@@ -16,9 +16,9 @@ export function ToolFrame({ tool }: { tool: Tool }) {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex h-9 shrink-0 items-center justify-between border-b border-line px-3 text-xs text-subtle">
+      <div className="flex h-9 shrink-0 items-center justify-between gap-2 border-b border-line px-3 text-xs text-subtle">
         <span className="truncate">{tool.url}</span>
-        <div className="flex items-center gap-1">
+        <div className="flex shrink-0 items-center gap-1">
           <button
             onClick={() => { setLoaded(false); setReloadKey((k) => k + 1); }}
             aria-label="Reload"
@@ -32,7 +32,9 @@ export function ToolFrame({ tool }: { tool: Tool }) {
             rel="noopener noreferrer"
             className="flex items-center gap-1 rounded px-2 py-1.5 hover:bg-hover-strong hover:text-strong"
           >
-            <ExternalLink size={13} /> Open in new window
+            <ExternalLink size={13} className="shrink-0" />
+            <span className="hidden sm:inline">Open in new window</span>
+            <span className="sm:hidden">Open</span>
           </a>
         </div>
       </div>

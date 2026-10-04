@@ -24,6 +24,7 @@ interface WorkspaceState {
   /* transient UI state */
   searchQuery: string;
   addModalOpen: boolean;
+  navOpen: boolean;
 
   loadCatalog: () => Promise<void>;
   openTool: (toolId: string) => void;
@@ -33,6 +34,7 @@ interface WorkspaceState {
   toggleFolder: (folderId: string) => void;
   toggleSidebar: () => void;
   setSearchQuery: (q: string) => void;
+  setNavOpen: (open: boolean) => void;
   setAddModalOpen: (open: boolean) => void;
   addTool: (input: NewToolInput) => void;
   addFolder: (name: string) => string;
@@ -60,6 +62,7 @@ export const useWorkspaceStore = create<WorkspaceState>()(
         sidebarCollapsed: false,
         searchQuery: "",
         addModalOpen: false,
+        navOpen: false,
 
         loadCatalog: async () => {
           const snapshot = await workspaceRepository.load();
@@ -102,6 +105,7 @@ export const useWorkspaceStore = create<WorkspaceState>()(
 
         toggleSidebar: () => set((s) => ({ sidebarCollapsed: !s.sidebarCollapsed })),
         setSearchQuery: (searchQuery) => set({ searchQuery }),
+        setNavOpen: (navOpen) => set({ navOpen }),
         setAddModalOpen: (addModalOpen) => set({ addModalOpen }),
 
         addTool: (input) => {

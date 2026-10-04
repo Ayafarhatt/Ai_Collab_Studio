@@ -22,13 +22,18 @@ export function Modal({ open, title, onClose, children }: ModalProps) {
   if (!open) return null;
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+      className="fixed inset-0 z-50 flex items-end justify-center overflow-y-auto overscroll-contain bg-black/60 p-0 sm:items-center sm:p-4"
       onMouseDown={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div role="dialog" aria-modal="true" aria-label={title} className="w-full max-w-md rounded-xl border border-line bg-panel p-5 shadow-2xl">
-        <div className="mb-4 flex items-center justify-between">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        className="my-auto max-h-[92dvh] w-full overflow-y-auto overscroll-contain rounded-t-2xl border border-line bg-panel p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl sm:max-w-md sm:rounded-xl sm:p-5"
+      >
+        <div className="mb-4 flex items-center justify-between gap-3">
           <h2 className="text-base font-semibold text-strong">{title}</h2>
-          <button onClick={onClose} aria-label="Close" className="rounded p-1 text-muted hover:bg-hover-strong hover:text-strong">
+          <button onClick={onClose} aria-label="Close" className="-mr-1 shrink-0 rounded p-1 text-muted hover:bg-hover-strong hover:text-strong">
             <X size={16} />
           </button>
         </div>

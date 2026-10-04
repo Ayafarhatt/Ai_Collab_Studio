@@ -5,7 +5,7 @@ import { Modal } from "@/components/ui/Modal";
 import { useWorkspaceStore } from "@/store/workspace.store";
 
 const field =
-  "h-10 w-full rounded-lg border border-line bg-canvas px-3 text-sm text-body placeholder:text-subtle focus:border-accent focus:outline-none";
+  "h-11 w-full rounded-lg border border-line bg-canvas px-3 text-base text-body placeholder:text-subtle focus:border-accent focus:outline-none sm:h-10 sm:text-sm";
 
 /** Create a new tool (with URL) or a new folder. */
 export function AddItemModal() {
@@ -57,7 +57,7 @@ export function AddItemModal() {
             </select>
           </>
         )}
-        <button className="h-10 w-full rounded-lg bg-accent text-sm font-medium text-white hover:bg-accent/90">
+        <button className="h-11 w-full rounded-lg bg-accent text-sm font-medium text-white hover:bg-accent/90 sm:h-10">
           {mode === "tool" ? "Add tool" : "Add folder"}
         </button>
       </form>

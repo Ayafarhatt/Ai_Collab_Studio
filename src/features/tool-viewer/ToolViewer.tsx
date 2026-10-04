@@ -15,7 +15,7 @@ export function ToolViewer() {
 
   if (tabs.length === 0) {
     return (
-      <div className="grid flex-1 place-items-center p-8 text-center">
+      <div className="grid flex-1 place-items-center overflow-y-auto p-6 text-center sm:p-8">
         <div>
           <p className="text-base font-medium text-body">No tools open</p>
           <p className="mt-1 text-sm text-subtle">Choose a tool from the sidebar to open it here.</p>

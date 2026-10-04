@@ -8,6 +8,8 @@
   color-scheme: light;
   --canvas: #f3f5fa;
   --panel: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #eef2f9;
   --line: #dbe1ee;
   --strong: #0f172a;
   --body: #1e293b;
@@ -23,6 +25,8 @@
   color-scheme: dark;
   --canvas: #0a0f1c;
   --panel: #0f1626;
+  --surface: #131c2e;
+  --surface-2: #182238;
   --line: #1c2740;
   --strong: #ffffff;
   --body: #e2e8f0;
@@ -37,6 +41,8 @@
 @theme inline {
   --color-canvas: var(--canvas);
   --color-panel: var(--panel);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-line: var(--line);
   --color-strong: var(--strong);
   --color-body: var(--body);
@@ -50,3 +56,26 @@
 
 html, body { height: 100%; background: var(--canvas); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* The shell owns scrolling, so never let the page itself scroll sideways. */
+body { overflow: hidden; overscroll-behavior: none; }
+
+/* Never let one long unbroken string (a URL, a tool name) widen a narrow screen. */
+@layer base {
+  p, span, h1, h2, h3, a, button { overflow-wrap: break-word; }
+}
+
+/*
+ * Touch devices never fire :hover, so controls that fade in on hover would stay
+ * invisible. These rules are intentionally unlayered: unlayered CSS outranks
+ * @layer utilities, so they win over `md:opacity-0` regardless of order.
+ */
+@media (hover: none) {
+  .reveal-on-hover { opacity: 1; }
+}
+
+/* Coarse pointers get bigger hit targets without changing layout. */
+@media (pointer: coarse) {
+  .reveal-on-hover > button { padding: 0.375rem; }
+}
+
